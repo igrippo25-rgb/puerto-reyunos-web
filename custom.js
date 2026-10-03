@@ -21,6 +21,9 @@
   var CARTEL_VENDIDO = ['Container_01FBB8EE_2525_97F8_418A_13B2C139C613', 'Container_01FA88EE_2525_97F8_41B1_1B6340A4F39B',
                         'Container_48FDD217_5EAB_1B44_41D0_18653BB873FF_mobile', 'Container_49F4F7BF_5EBB_3944_41C4_0A3068A3103C_mobile'];
   var EFECTO = 'effect_0C111EBB_253A_8A58_41C1_B5A6DA40F8C1';
+  // Relleno azul "Sector comercial" que el export pinta sobre los lotes 1, 2 y 3 del Sector 10.
+  // Se apaga entero (dibujo y click): los lotes quedan con su contorno y su pin, como los demás.
+  var SIN_RELLENO = ['overlay_0BAA4FA1_2CB9_DAFE_41B3_A123470FCE3F'];
 
   function porId(root, id) {
     if (root[id]) return root[id];
@@ -44,6 +47,10 @@
       }, root);
     });
     delete root.get('data').tags2Overlays; // que el índice por etiqueta se rearme con los nuevos tags
+    SIN_RELLENO.forEach(function (id) {
+      var overlay = porId(root, id);
+      if (overlay) overlay.set('enabled', false);
+    });
   }
 
   var intentos = 0;
